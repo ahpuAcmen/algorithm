@@ -6,54 +6,75 @@ import java.util.List;
 
 public class Solution {
 
+    /**
+     * 两数相加
+     * 1.获取两数的字符数组
+     * 2.对两数的字符数组按照顺序相加
+     * 3.对结果数组按照变成链表
+     * @param l1
+     * @param l2
+     * @return
+     */
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        //获取初始链表的数字列表
         List<Integer> list1 = getListNodeNums(l1);
         List<Integer> list2 = getListNodeNums(l2);
-        int maxLength = list1.size()>=list2.size()?list1.size():list2.size();
+        //计算最大长度
+        int maxLength = list1.size() >= list2.size() ? list1.size() : list2.size();
         // if(list1.size() = list2.size() && list1.get(0) + list2.get(0)>=10){
-        int minLength = list1.size()<=list2.size()?list1.size():list2.size();
+        //计算最小长度
+        int minLength = list1.size() <= list2.size() ? list1.size() : list2.size();
         // }
         int up = 0;
-        int[] result = new int[maxLength+1];
-        for(int i = 0 ;i<minLength;i++){
+        int[] result = new int[maxLength + 1];
+        //计算位数重合部分
+        for (int i = 0; i < minLength; i++) {
             // int sum = list1.get(list1.size()-1-i)+list2.get(list2.size()-1-i) + up;
             // up = sum / 10;
             // result[maxLength - i] = sum % 10;
-            int sum = list1.get(i)+list2.get(i) + up;
+            int sum = list1.get(i) + list2.get(i) + up;
             up = sum / 10;
             result[i] = sum % 10;
         }
-        if(list1.size() == list2.size() ){
-            if(up > 0){
+
+        if (list1.size() == list2.size()) {
+            //两数长度相同
+            if (up > 0) {
                 result[maxLength] = up;
                 // return result;
                 return intIntoListNode(result);
-            }else{
-                return intIntoListNode(Arrays.copyOfRange(result,0,maxLength));
+            } else {
+                return intIntoListNode(Arrays.copyOfRange(result, 0, maxLength));
             }
-        }else{
-            List<Integer> lenList = list1.size()>list2.size()?list1:list2;
-            for(int i = minLength;i<maxLength;i++){
+        } else {
+            //两数长度不同
+            List<Integer> lenList = list1.size() > list2.size() ? list1 : list2;
+            for (int i = minLength; i < maxLength; i++) {
                 int sum = lenList.get(i) + up;
                 up = sum / 10;
                 result[i] = sum % 10;
             }
-            if(up > 0){
+            if (up > 0) {
                 result[maxLength] = up;
                 // return result;
                 return intIntoListNode(result);
-            }else{
-                return intIntoListNode(Arrays.copyOfRange(result,0,maxLength));
+            } else {
+                return intIntoListNode(Arrays.copyOfRange(result, 0, maxLength));
             }
         }
     }
 
-    List<Integer> getListNodeNums(ListNode listNode){
+    /**
+     * 获取初始链表的数字列表
+     * @param listNode
+     * @return
+     */
+    List<Integer> getListNodeNums(ListNode listNode) {
         List<Integer> list = new ArrayList();
 
-        while(true){
+        while (true) {
             list.add(listNode.val);
-            if(listNode.next == null){
+            if (listNode.next == null) {
                 break;
             }
             listNode = listNode.next;
@@ -61,16 +82,21 @@ public class Solution {
         return list;
     }
 
-    ListNode intIntoListNode(int[] result){
+    /**
+     * 数组变链表
+     * @param result
+     * @return
+     */
+    ListNode intIntoListNode(int[] result) {
 
 
         ListNode resultNode = new ListNode();
         ListNode lastNode = new ListNode();
         for (int i = result.length - 1; i >= 0; i--) {
             resultNode.val = result[i];
-            if ( i  == result.length - 1){
+            if (i == result.length - 1) {
                 resultNode.next = null;
-            }else {
+            } else {
                 resultNode.next = lastNode;
             }
             lastNode = new ListNode();
@@ -108,8 +134,19 @@ public class Solution {
     }
 
 
-
-
+    /**
+     * 给你两个 非空 的链表，表示两个非负的整数。它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位 数字。
+     * <p>
+     * 请你将两个数相加，并以相同形式返回一个表示和的链表。
+     * <p>
+     * 你可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+     * <p>
+     * 来源：力扣（LeetCode）
+     * 链接：https://leetcode.cn/problems/add-two-numbers
+     * 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         Solution solution = new Solution();
         ListNode listNode1 = new ListNode();
@@ -148,6 +185,7 @@ public class Solution {
 //        listNode10.val = 9;
 //        listNode11.val = 9;
 
+        //计算两数之和
         ListNode listNode = solution.addTwoNumbers(listNode1, listNode2);
         System.out.println(listNode.val);
         System.out.println(listNode.next.val);
@@ -157,11 +195,19 @@ public class Solution {
 }
 
 
-
 class ListNode {
     int val;
     ListNode next;
-    ListNode() {}
-    ListNode(int val) { this.val = val; }
-    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+
+    ListNode() {
+    }
+
+    ListNode(int val) {
+        this.val = val;
+    }
+
+    ListNode(int val, ListNode next) {
+        this.val = val;
+        this.next = next;
+    }
 }
