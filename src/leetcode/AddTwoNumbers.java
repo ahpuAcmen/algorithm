@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Solution {
+public class AddTwoNumbers {
 
     /**
      * 两数相加
      * 1.获取两数的字符数组
      * 2.对两数的字符数组按照顺序相加
      * 3.对结果数组按照变成链表
+     *
      * @param l1
      * @param l2
      * @return
@@ -66,6 +67,7 @@ public class Solution {
 
     /**
      * 获取初始链表的数字列表
+     *
      * @param listNode
      * @return
      */
@@ -84,6 +86,7 @@ public class Solution {
 
     /**
      * 数组变链表
+     *
      * @param result
      * @return
      */
@@ -148,7 +151,7 @@ public class Solution {
      * @param args
      */
     public static void main(String[] args) {
-        Solution solution = new Solution();
+        AddTwoNumbers solution = new AddTwoNumbers();
         ListNode listNode1 = new ListNode();
         ListNode listNode2 = new ListNode();
         listNode1.val = 5;
@@ -209,5 +212,56 @@ class ListNode {
     ListNode(int val, ListNode next) {
         this.val = val;
         this.next = next;
+    }
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode pre = new ListNode(0);
+        ListNode current = pre;
+        int up = 0;
+        while (l1.next != null || l2.next != null) {
+            int liv1 = l1 == null ? 0 : l1.val;
+            int liv2 = l2 == null ? 0 : l2.val;
+            int sum = liv1 + liv2 + up;
+            up = sum/10;
+            int result = sum % 10;
+            current.next = new ListNode(result);
+            current = current.next;
+            if (l1 != null) {
+                l1 = l1.next;
+            }
+            if (l2 != null) {
+                l2 = l2.next;
+            }
+        }
+        if (up == 1){
+            current.next = new ListNode(up);
+        }
+
+        return pre.next;
+    }
+
+    public ListNode addTwoNumbers3(ListNode l1, ListNode l2) {
+        ListNode pre = new ListNode(0);
+        ListNode cur = pre;
+        int carry = 0;
+        while(l1 != null || l2 != null) {
+            int x = l1 == null ? 0 : l1.val;
+            int y = l2 == null ? 0 : l2.val;
+            int sum = x + y + carry;
+
+            carry = sum / 10;
+            sum = sum % 10;
+            cur.next = new ListNode(sum);
+
+            cur = cur.next;
+            if(l1 != null)
+                l1 = l1.next;
+            if(l2 != null)
+                l2 = l2.next;
+        }
+        if(carry == 1) {
+            cur.next = new ListNode(carry);
+        }
+        return pre.next;
     }
 }
