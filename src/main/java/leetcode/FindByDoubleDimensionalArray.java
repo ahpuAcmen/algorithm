@@ -38,23 +38,24 @@ public class FindByDoubleDimensionalArray
         for (int i = 0; i < n; i++)
         {
             int first = matrix[i][1];
-            if (first > value)
+            if (first > target)
             {
                 return false;
             }
-            for (int j = 0; j < n; j++)
+            for (int j = 0; j < m; j++)
             {
                 int value = matrix[i][j];
                 if (value > target)
                 {
                     break;
                 }
-                if (value = target)
+                if (value == target)
                 {
-                    return true
+                    return true;
                 }
             }
         }
+        return false;
     }
 
 }
