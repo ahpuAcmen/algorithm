@@ -1,4 +1,4 @@
-package leetcode;
+package main.java.leetcode;
 
 /**
  * 在一个 n * m 的二维数组中，
@@ -28,29 +28,57 @@ package leetcode;
  * <p>
  * 0 <= m <= 1000
  */
-public class FindByDoubleDimensionalArray
-{
+public class FindByDoubleDimensionalArray {
+    public static void main(String[] args) {
+        int[][] matrix = new int[][]{{}};
+        System.out.println();
+        findNumberIn2DArray2(matrix, 1);
+    }
 
-    public boolean findNumberIn2DArray(int[][] matrix, int target)
-    {
+    public static boolean findNumberIn2DArray(int[][] matrix, int target) {
         int n = matrix.length;
-        int m = matrix[1].length;
-        for (int i = 0; i < n; i++)
-        {
-            int first = matrix[i][1];
-            if (first > target)
-            {
+        if (n == 0) {
+            return false;
+        }
+        int m = matrix[0].length;
+        if (m == 0) {
+            return false;
+        }
+        for (int i = 0; i < n; i++) {
+            int first = matrix[i][0];
+            if (first > target) {
                 return false;
             }
-            for (int j = 0; j < m; j++)
-            {
+            for (int j = 0; j < m; j++) {
                 int value = matrix[i][j];
-                if (value > target)
-                {
+                if (value > target) {
                     break;
                 }
-                if (value == target)
-                {
+                if (value == target) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 暴力优化-yyds
+     *
+     * @param matrix
+     * @param target
+     * @return
+     */
+    public static boolean findNumberIn2DArray2(int[][] matrix, int target) {
+        for (int[] ints : matrix) {
+            if (ints.length == 0 || ints[0] > target) {
+                break;
+            }
+            for (int anInt : ints) {
+                if (anInt > target) {
+                    break;
+                }
+                if (anInt == target) {
                     return true;
                 }
             }
